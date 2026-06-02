@@ -34,6 +34,7 @@ from std_msgs.msg import String
 from geometry_msgs.msg import PoseStamped
 from nav2_msgs.action import NavigateToPose
 from rcl_interfaces.msg import ParameterDescriptor
+from action_msgs.srv import CancelGoal
 
 import json
 import math
@@ -95,7 +96,7 @@ class IntelligenceToNav2(Node):
         self.current_destination: str              = ""
         self._last_feedback_time: float            = 0.0
         self._last_distance: float                 = float('inf')
-        self._server_ready: bool                   = True
+        self._server_ready: bool                   = False
 
         # ── Callback group (allow concurrent callbacks) ──────
         self._cb_group = ReentrantCallbackGroup()
@@ -111,6 +112,13 @@ class IntelligenceToNav2(Node):
         # ── Subscribers ──────────────────────────────────────
         self.create_subscription(
             String, '/llm_command', self._llm_command_cb, 10,
+            callback_group=self._cb_group
+        )
+        
+        # ── Global Cancel Service ────────────────────────────
+        self.cancel_client = self.create_client(
+            CancelGoal, 
+            '/navigate_to_pose/_action/cancel_goal',
             callback_group=self._cb_group
         )
 
@@ -135,14 +143,36 @@ class IntelligenceToNav2(Node):
         yaml_path = self.get_parameter('semantics_yaml').get_parameter_value().string_value
 
         if not yaml_path:
-            # Search order:
-            #  1. Package share directory (colcon install)
-            #  2. Container fallback path
             search_paths = []
+            
+            # 1. Attempt to pull from centralized system_settings.env dynamically!
+            def find_repo_root(current_path):
+                parts = current_path.split(os.sep)
+                if 'ros2_ws' in parts:
+                    idx = parts.index('ros2_ws')
+                    return os.sep.join(parts[:idx])
+                return None
 
+            repo_root = find_repo_root(os.path.abspath(__file__))
+            if repo_root:
+                env_file = os.path.join(repo_root, 'wheelchair_intelligence', 'development', 'config', 'system_settings.env')
+                if os.path.isfile(env_file):
+                    with open(env_file, 'r') as f:
+                        for line in f:
+                            if line.startswith('MAP_SEMANTICS_FILE='):
+                                filename = line.strip().split('=')[1].strip('"\'')
+                                # Reconstruct absolute path
+                                yaml_abs = os.path.join(repo_root, 'wheelchair_intelligence', 'development', filename)
+                                search_paths.append(yaml_abs)
+            
+            # 2. Check current OS Environment Variable directly
+            if 'MAP_SEMANTICS_PATH' in os.environ:
+                search_paths.append(os.path.expanduser(os.environ['MAP_SEMANTICS_PATH']))
+
+            # 3. Package share directory (colcon install) fallback
             try:
-                pkg_share = get_package_share_directory('wheelchair_intelligence_addons')
-                search_paths.append(os.path.join(pkg_share, 'config', 'map_semantics.yaml'))
+                pkg_share = get_package_share_directory('wheelchair_intelligence_ros2')
+                search_paths.append(os.path.join(pkg_share, 'config', 'map_semantics_dqn4.yaml'))
             except Exception:
                 pass
 
@@ -152,7 +182,7 @@ class IntelligenceToNav2(Node):
             )
             search_paths.append(
                 '/home/container_user/wheelchair2/src/'
-                'wheelchair_intelligence_addons/config/map_semantics.yaml'
+                'wheelchair_intelligence_ros2/config/map_semantics.yaml'
             )
 
             for candidate in search_paths:
@@ -251,6 +281,9 @@ class IntelligenceToNav2(Node):
             self.get_logger().warn('Nav2 server not ready — ignoring navigate command')
             return
 
+        # Hot-reload locations to instantly pick up newly saved poses
+        self.destinations = self._load_locations()
+
         if destination not in self.destinations:
             self.get_logger().warn(
                 f'Unknown destination "{destination}". '
@@ -269,19 +302,27 @@ class IntelligenceToNav2(Node):
 
     def _handle_stop(self):
         """Cancel current goal and clear all saved poses."""
-        if self.current_goal_handle is None:
-            self.get_logger().info('No active goal to stop.')
-            self.nav_state = NavState.IDLE
-            self._publish_status()
-            return
-
-        self.get_logger().info('Stopping navigation...')
+        self.get_logger().info('Stopping navigation (Cancelling ALL goals)...')
+        
+        # Remember the goal in case the user says "continue" later
+        if self.active_goal_pose:
+            self.paused_goal_pose = self.active_goal_pose
         self.active_goal_pose = None
-        self.paused_goal_pose = None
         self.nav_state = NavState.CANCELLED
+        self._publish_status()
 
-        future = self.current_goal_handle.cancel_goal_async()
-        future.add_done_callback(self._on_cancel_done)
+        # 1. Cancel our local goal handle if we have one
+        if self.current_goal_handle is not None:
+            future = self.current_goal_handle.cancel_goal_async()
+            future.add_done_callback(self._on_cancel_done)
+            
+        # 2. Force cancel ALL goals globally (handles RViz2 goals we don't track)
+        if self.cancel_client.wait_for_service(timeout_sec=0.5):
+            req = CancelGoal.Request()
+            req.goal_info.goal_id.uuid = [0] * 16 # All zeros = cancel all
+            self.cancel_client.call_async(req)
+        else:
+            self.get_logger().warn('Cancel service unavailable.')
 
     def _handle_pause(self):
         """Pause (cancel the current goal but remember it for resume)."""

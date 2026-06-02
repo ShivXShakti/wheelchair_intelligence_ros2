@@ -27,7 +27,6 @@ setup(
     },
     entry_points={
         'console_scripts': [
-        	'e_create_semantics_for_map = wheelchair_intelligence_ros2.create_semantics_for_map:main',
             'e_intelligence_to_nav2_com = wheelchair_intelligence_ros2.e_intelligence_to_nav2_com:main',
         ],
     },
