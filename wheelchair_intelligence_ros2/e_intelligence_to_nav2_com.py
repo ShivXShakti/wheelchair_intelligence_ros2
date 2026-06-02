@@ -507,16 +507,7 @@ def main(args=None):
     rclpy.init(args=args)
     node = IntelligenceToNav2()
 
-    # Graceful shutdown on Ctrl+C
-    def _signal_handler(sig, frame):
-        node.get_logger().info('SIGINT received — shutting down...')
-        if node.current_goal_handle is not None:
-            node.current_goal_handle.cancel_goal_async()
-        node.destroy_node()
-        rclpy.try_shutdown()
-        sys.exit(0)
-
-    signal.signal(signal.SIGINT, _signal_handler)
+    # Removed custom SIGINT handler to prevent deadlock with rclpy.spin
 
     try:
         rclpy.spin(node)
