@@ -31,7 +31,7 @@ from rclpy.node import Node
 from rclpy.action import ActionClient
 from rclpy.callback_groups import ReentrantCallbackGroup
 from std_msgs.msg import String
-from geometry_msgs.msg import PoseStamped
+from geometry_msgs.msg import PoseStamped, Twist
 from nav2_msgs.action import NavigateToPose
 from rcl_interfaces.msg import ParameterDescriptor
 from action_msgs.srv import CancelGoal
@@ -125,6 +125,7 @@ class IntelligenceToNav2(Node):
         # ── Publishers ───────────────────────────────────────
         self.status_pub = self.create_publisher(String, '/navigation_status', 10)
         self.feedback_pub = self.create_publisher(String, '/nav_feedback', 10)
+        self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
 
         # ── Non-blocking server discovery ────────────────────
         self._discovery_timer = self.create_timer(
@@ -177,6 +178,12 @@ class IntelligenceToNav2(Node):
                 pass
 
             # Container / alternate workspace fallback
+            search_paths.append(
+                '/wheelchair_ws/google_quant/wheelchair_intelligence/development/map_semantics.yaml'
+            )
+            search_paths.append(
+                '/wheelchair_ws/google_quant/wheelchair_intelligence/development/config/map_semantics.yaml'
+            )
             search_paths.append(
                 '/wheelchair_ws/wheelchair_intelligence/map_semantics.yaml'
             )
@@ -323,6 +330,12 @@ class IntelligenceToNav2(Node):
             self.cancel_client.call_async(req)
         else:
             self.get_logger().warn('Cancel service unavailable.')
+
+        # 3. Halt physical motion immediately
+        twist = Twist()
+        twist.linear.x = 0.0
+        twist.angular.z = 0.0
+        self.cmd_vel_pub.publish(twist)
 
     def _handle_pause(self):
         """Pause (cancel the current goal but remember it for resume)."""
