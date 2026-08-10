@@ -146,25 +146,27 @@ class IntelligenceToNav2(Node):
         if not yaml_path:
             search_paths = []
             
-            # 1. Attempt to pull from centralized system_settings.env dynamically!
-            def find_repo_root(current_path):
-                parts = current_path.split(os.sep)
-                if 'ros2_ws' in parts:
-                    idx = parts.index('ros2_ws')
-                    return os.sep.join(parts[:idx])
-                return None
+            # 1. Attempt to pull from centralized backend_config.json dynamically!
+            config_paths = [
+                "/wheelchair_ws/google_quant/wheelchair_intelligence/development/config/backend_config.json",
+                "/home/robot/wheelchair_ws/google_quant/wheelchair_intelligence/development/config/backend_config.json",
+                "/home/ducky/wheelchair_ws/wheelchair_intelligence/development/config/backend_config.json",
+                "/home/container_user/wheelchair2/dependencies/wheelchair_intelligence_ros2/config/backend_config.json"
+            ]
+            config_data = {}
+            for path in config_paths:
+                if os.path.isfile(path):
+                    try:
+                        with open(path, 'r') as f:
+                            config_data = json.load(f)
+                        self.get_logger().info(f'Loaded config from {path}')
+                        break
+                    except Exception as e:
+                        self.get_logger().error(f'Failed to parse config {path}: {e}')
 
-            repo_root = find_repo_root(os.path.abspath(__file__))
-            if repo_root:
-                env_file = os.path.join(repo_root, 'wheelchair_intelligence', 'development', 'config', 'system_settings.env')
-                if os.path.isfile(env_file):
-                    with open(env_file, 'r') as f:
-                        for line in f:
-                            if line.startswith('MAP_SEMANTICS_FILE='):
-                                filename = line.strip().split('=')[1].strip('"\'')
-                                # Reconstruct absolute path
-                                yaml_abs = os.path.join(repo_root, 'wheelchair_intelligence', 'development', filename)
-                                search_paths.append(yaml_abs)
+            if config_data.get("map_semantics_path"):
+                search_paths.append(config_data.get("map_semantics_path"))
+            search_paths.extend(config_data.get("map_semantics_candidates", []))
             
             # 2. Check current OS Environment Variable directly
             if 'MAP_SEMANTICS_PATH' in os.environ:
@@ -186,6 +188,18 @@ class IntelligenceToNav2(Node):
             )
             search_paths.append(
                 '/wheelchair_ws/wheelchair_intelligence/map_semantics.yaml'
+            )
+            search_paths.append(
+                '/home/container_user/wheelchair2/dependencies/'
+                'wheelchair_intelligence_ros2/config/map_semantics.yaml'
+            )
+            search_paths.append(
+                '/home/robot/wheelchair_ws/ros2_ws/src/'
+                'wheelchair_intelligence_ros2/config/map_semantics.yaml'
+            )
+            search_paths.append(
+                '/home/robot/wheelchair_ws/wheelchair2/dependencies/'
+                'wheelchair_intelligence_ros2/config/map_semantics.yaml'
             )
             search_paths.append(
                 '/home/container_user/wheelchair2/src/'
