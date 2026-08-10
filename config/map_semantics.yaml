@@ -1,68 +1,21 @@
-# ============================================================
-#  RRC Lab — Semantic Map (4th Floor, IIIT Hyderabad)
-#  Used by the wheelchair navigation LLM backend to resolve
-#  user commands to physical goal poses.
-#
-#  Each location has:
-#    x, y, yaw  — Nav2 goal pose (map frame)
-#    type        — Category of the location
-#    tags        — Semantic keywords for LLM matching
-#    aliases     — Alternate names users might say
-# ============================================================
-
-rrc testing area:
-  x: 3.57741685397923
-  y: -1.6966678816825151
-  yaw: 1.4785734038355611
-  type: "facility"
-  tags: ["experiment", "testing", "lab", "testing area", "rrc lab", "robotics lab"]
-  aliases: ["testing area", "rrc lab", "rrc testing", "lab", "testing", "experiment area", "robotics lab"]
-
-charging point:
-  x: 5.479045716050461
-  y: 0.6417502121974898
-  yaw: -1.748823168779675
-  type: "facility"
-  tags: ["charging", "power", "plug", "battery", "charge"]
-  aliases: ["charging", "charging point", "charging station", "power outlet", "plug point"]
-
-library:
-  x: -20.022583497688174
-  y: 25.45333252288401
-  yaw: -3.0050690592025644
-  type: "facility"
-  tags: ["library", "books", "reading", "study area", "quiet zone"]
-  aliases: ["library", "the library", "reading room"]
-
-rrc entry:
-  x: -7.472583310678601
-  y: 6.603332241997123
-  yaw: -0.03408236629564197
-  type: "rrc department entry"
-  tags: ["Robotics Research Center", "rrc faculty", "madhav sir", "rrc entry gate"]
-  aliases: ["rrc building", "rrc gate"]
-
-rrc exit:
-  x: -4.022583259269595
-  y: 6.453332239761949
-  yaw: 2.970890647838172
-  type: "rrc department"
-  tags: ["rrc exit", "rrc security check", "rrc enquiry"]
-  aliases: ["rrc building outside", "security check"]
-
-rrc lab entry:
-  x: 9.977416949346662
-  y: 4.403332209214568
-  yaw: -1.679310321368746
-  type: "rrc department"
-  tags: ["Robotics Research Center", "rrc faculty", "madhav sir", "rrc entry gate"]
-  aliases: ["rrc building", "rrc gate"]
-
-himalaya entry:
-  x: 9.277416938915849
-  y: 20.203332444652915
-  yaw: -0.06872093726398526
-  type: "himalaya building"
-  tags: ["classrooms", "himalaya"]
-  aliases: ["himalya gate", "classrooms"]
-
+glass_facing:
+  x: 7.224430652335286
+  y: 4.39686163328588
+  yaw: -1.6125994529125487
+  type: "rrc lab"
+  tags: ["Robotics Research Center"]
+  aliases: ["glass testing", "rrc glass testing area"]
+kuldeep:
+  x: 0.12443054653704166
+  y: 5.196861645206809
+  yaw: -0.026392191120341028
+  type: "staff"
+  tags: ["Robotics Research Center", "IHUB staff"]
+  aliases: ["kuldeep", "kuldeep desk", "kd"]
+testing area:
+  x: 4.210129351326738
+  y: 5.565508757473458
+  yaw: 1.5372228379577553
+  type: "rrc lab"
+  tags: ["Robotics Research Center testing"]
+  aliases: ["rrc testing area", "testing area"]

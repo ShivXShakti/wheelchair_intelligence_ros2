@@ -148,10 +148,12 @@ class IntelligenceToNav2(Node):
             
             # 1. Attempt to pull from centralized backend_config.json dynamically!
             config_paths = [
+                "/wheelchair_ws/wheelchair_intelligence/development/config/backend_config.json",
                 "/wheelchair_ws/google_quant/wheelchair_intelligence/development/config/backend_config.json",
                 "/home/robot/wheelchair_ws/google_quant/wheelchair_intelligence/development/config/backend_config.json",
                 "/home/ducky/wheelchair_ws/wheelchair_intelligence/development/config/backend_config.json",
-                "/home/container_user/wheelchair2/dependencies/wheelchair_intelligence_ros2/config/backend_config.json"
+                "/home/container_user/wheelchair2/dependencies/wheelchair_intelligence_ros2/config/backend_config.json",
+                "/home/container_user/wheelchair2/src/dependencies/wheelchair_intelligence_ros2/config/backend_config.json"
             ]
             config_data = {}
             for path in config_paths:
@@ -181,6 +183,12 @@ class IntelligenceToNav2(Node):
 
             # Container / alternate workspace fallback
             search_paths.append(
+                '/wheelchair_ws/wheelchair_intelligence/development/map_semantics.yaml'
+            )
+            search_paths.append(
+                '/wheelchair_ws/wheelchair_intelligence/development/config/map_semantics.yaml'
+            )
+            search_paths.append(
                 '/wheelchair_ws/google_quant/wheelchair_intelligence/development/map_semantics.yaml'
             )
             search_paths.append(
@@ -191,6 +199,10 @@ class IntelligenceToNav2(Node):
             )
             search_paths.append(
                 '/home/container_user/wheelchair2/dependencies/'
+                'wheelchair_intelligence_ros2/config/map_semantics.yaml'
+            )
+            search_paths.append(
+                '/home/container_user/wheelchair2/src/dependencies/'
                 'wheelchair_intelligence_ros2/config/map_semantics.yaml'
             )
             search_paths.append(
