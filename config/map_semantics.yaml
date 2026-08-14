@@ -1,4 +1,4 @@
-glass_facing:
+glass testing:
   x: 7.224430652335286
   y: 4.39686163328588
   yaw: -1.6125994529125487
@@ -19,3 +19,50 @@ testing area:
   type: "rrc lab"
   tags: ["Robotics Research Center testing"]
   aliases: ["rrc testing area", "testing area"]
+tarun:
+  x: -0.09890191716858347
+  y: 6.660408566906446
+  yaw: 1.6184862303926786
+  type: "saved_location"
+  tags: []
+  aliases: []
+
+manipulator lab:
+  x: 6.333873618209875
+  y: 0.27677852677066106
+  yaw: -2.074600920486968
+  type: "saved_location"
+  tags: []
+  aliases: []
+
+rrclab exit:
+  x: 9.165048326698987
+  y: 12.661847839259341
+  yaw: 0.9193920603925002
+  type: "saved_location"
+  tags: []
+  aliases: []
+
+rrclab entry:
+  x: 10.03995027253657
+  y: 16.583516270467058
+  yaw: -1.3808962554145372
+  type: "saved_location"
+  tags: []
+  aliases: []
+
+rrc reception:
+  x: 1.062247550520466
+  y: 18.08430900308273
+  yaw: -1.7394246854390634
+  type: "saved_location"
+  tags: []
+  aliases: []
+
+rrc entry:
+  x: -3.5462109340084167
+  y: 18.162598470995928
+  yaw: -0.21229147663189804
+  type: "saved_location"
+  tags: []
+  aliases: []
