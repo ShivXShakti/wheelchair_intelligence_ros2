@@ -19,13 +19,6 @@ testing area:
   type: "rrc lab"
   tags: ["Robotics Research Center testing"]
   aliases: ["rrc testing area", "testing area"]
-tarun:
-  x: -0.09890191716858347
-  y: 6.660408566906446
-  yaw: 1.6184862303926786
-  type: "saved_location"
-  tags: []
-  aliases: []
 
 manipulator lab:
   x: 6.333873618209875
