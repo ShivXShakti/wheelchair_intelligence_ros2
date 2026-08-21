@@ -1,61 +1,128 @@
 glass testing:
-  x: 7.224430652335286
-  y: 4.39686163328588
-  yaw: -1.6125994529125487
-  type: "rrc lab"
-  tags: ["Robotics Research Center"]
-  aliases: ["glass testing", "rrc glass testing area"]
-kuldeep:
-  x: 0.12443054653704166
-  y: 5.196861645206809
-  yaw: -0.026392191120341028
-  type: "staff"
-  tags: ["Robotics Research Center", "IHUB staff"]
-  aliases: ["kuldeep", "kuldeep desk", "kd"]
-testing area:
-  x: 4.210129351326738
-  y: 5.565508757473458
-  yaw: 1.5372228379577553
-  type: "rrc lab"
-  tags: ["Robotics Research Center testing"]
-  aliases: ["rrc testing area", "testing area"]
-
-manipulator lab:
-  x: 6.333873618209875
-  y: 0.27677852677066106
-  yaw: -2.074600920486968
+  x: -4.9969442925079735
+  y: 0.6881535715456915
+  yaw: -1.8470317311856295
   type: "saved_location"
-  tags: []
-  aliases: []
+  tags:
+    - "testing"
+    - "glass_zone"
+    - "indoor"
+  aliases:
+    - "glass area"
+    - "glass test site"
+    - "glass partition"
+    - "glass wall"
 
-rrclab exit:
-  x: 9.165048326698987
-  y: 12.661847839259341
-  yaw: 0.9193920603925002
+wheelchair station rrc lab:
+  x: -1.235314794901326
+  y: 12.415308017220548
+  yaw: 2.9108439806268214
   type: "saved_location"
-  tags: []
-  aliases: []
+  tags:
+    - "stations"
+    - "labs"
+    - "charging"
+  aliases:
+    - "rrc lab"
+    - "robotics lab"
+    - "rrc lab station"
+    - "robotics lab station"
 
-rrclab entry:
-  x: 10.03995027253657
-  y: 16.583516270467058
-  yaw: -1.3808962554145372
+wheelchair station rrc:
+  x: -14.022661336890021
+  y: 16.89456632351811
+  yaw: 2.8837357590785
   type: "saved_location"
-  tags: []
-  aliases: []
+  tags:
+    - "stations"
+    - "rrc_building"
+    - "entrances"
+  aliases:
+    - "rrc main"
+    - "rrc entrance"
+    - "robotics center"
+    - "rrc station"
 
-rrc reception:
-  x: 1.062247550520466
-  y: 18.08430900308273
-  yaw: -1.7394246854390634
+wheelchair station bodh105:
+  x: -1.3843065467550897
+  y: 29.617964550994763
+  yaw: -0.17548677466836554
   type: "saved_location"
-  tags: []
-  aliases: []
+  tags:
+    - "stations"
+    - "himalaya_building"
+    - "classrooms"
+  aliases:
+    - "bodh 105"
+    - "bodh 105 classroom"
+    - "classroom 105"
+    - "room 105"
+    - "bodh room 105"
+    - "bodh 105 station"
+    - "himalaya entrance"
 
-rrc entry:
-  x: -3.5462109340084167
-  y: 18.162598470995928
-  yaw: -0.21229147663189804
+wheelchar station bodh104:
+  x: 7.908463460180059
+  y: 31.74811858051223
+  yaw: -0.25824996284569823
   type: "saved_location"
-  tags: []
-  aliases: []
+  tags:
+    - "stations"
+    - "bodh_building"
+    - "classrooms"
+  aliases:
+    - "bodh 104"
+    - "bodh 104 classroom"
+    - "classroom 104"
+    - "room 104"
+    - "bodh room 104"
+    - "bodh 104 station"
+
+wheelchar station bodh103:
+  x: 14.24315204527803
+  y: 41.60043054665182
+  yaw: -0.18344227466608046
+  type: "saved_location"
+  tags:
+    - "stations"
+    - "bodh_building"
+    - "classrooms"
+  aliases:
+    - "bodh 103"
+    - "bodh 103 classroom"
+    - "classroom 103"
+    - "room 103"
+    - "bodh room 103"
+    - "bodh 103 station"
+
+wheelchair station h102:
+  x: 7.968055602643879
+  y: 55.61745208645105
+  yaw: 2.9170945242591078
+  type: "saved_location"
+  tags:
+    - "stations"
+    - "himalaya_building"
+    - "classrooms"
+  aliases:
+    - "h102 station"
+    - "himalaya h102"
+    - "h102 classroom"
+    - "classroom h102"
+
+wheelchair station h103:
+  x: 13.444110139189913
+  y: 62.28740856040153
+  yaw: 2.063329400582242
+  type: "saved_location"
+  tags:
+    - "stations"
+    - "himalaya_building"
+    - "classrooms"
+  aliases:
+    - "h103"
+    - "himalaya 103"
+    - "himalaya room 103"
+    - "h103"
+    - "h103 classroom"
+    - "h103 station"
