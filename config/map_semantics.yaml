@@ -3,6 +3,7 @@ glass testing:
   y: 0.6881535715456915
   yaw: -1.8470317311856295
   type: "saved_location"
+  serviceable: true
   tags:
     - "testing"
     - "glass_zone"
@@ -18,6 +19,7 @@ wheelchair station rrc lab:
   y: 12.415308017220548
   yaw: 2.9108439806268214
   type: "saved_location"
+  serviceable: true
   tags:
     - "stations"
     - "labs"
@@ -33,6 +35,7 @@ wheelchair station rrc:
   y: 16.89456632351811
   yaw: 2.8837357590785
   type: "saved_location"
+  serviceable: true
   tags:
     - "stations"
     - "rrc_building"
@@ -48,6 +51,7 @@ wheelchair station bodh105:
   y: 29.617964550994763
   yaw: -0.17548677466836554
   type: "saved_location"
+  serviceable: true
   tags:
     - "stations"
     - "himalaya_building"
@@ -66,6 +70,7 @@ wheelchar station bodh104:
   y: 31.74811858051223
   yaw: -0.25824996284569823
   type: "saved_location"
+  serviceable: true
   tags:
     - "stations"
     - "bodh_building"
@@ -83,6 +88,7 @@ wheelchar station bodh103:
   y: 41.60043054665182
   yaw: -0.18344227466608046
   type: "saved_location"
+  serviceable: true
   tags:
     - "stations"
     - "bodh_building"
@@ -100,6 +106,7 @@ wheelchair station h102:
   y: 55.61745208645105
   yaw: 2.9170945242591078
   type: "saved_location"
+  serviceable: true
   tags:
     - "stations"
     - "himalaya_building"
@@ -115,6 +122,7 @@ wheelchair station h103:
   y: 62.28740856040153
   yaw: 2.063329400582242
   type: "saved_location"
+  serviceable: true
   tags:
     - "stations"
     - "himalaya_building"
@@ -123,6 +131,96 @@ wheelchair station h103:
     - "h103"
     - "himalaya 103"
     - "himalaya room 103"
-    - "h103"
     - "h103 classroom"
     - "h103 station"
+
+rrc water cooler:
+  x: -2.0
+  y: 13.5
+  yaw: 0.0
+  type: "saved_location"
+  serviceable: true
+  tags:
+    - "water_cooler"
+    - "rrc_building"
+    - "common"
+  aliases:
+    - "rrc water cooler"
+    - "rrc water"
+    - "rrc drinking water"
+
+himalaya water cooler:
+  x: 8.5
+  y: 56.0
+  yaw: 0.0
+  type: "saved_location"
+  serviceable: true
+  tags:
+    - "water_cooler"
+    - "himalaya_building"
+    - "common"
+  aliases:
+    - "himalaya water cooler"
+    - "himalaya water"
+    - "himalaya drinking water"
+
+vindhya water cooler:
+  x: 20.0
+  y: 45.0
+  yaw: 0.0
+  type: "saved_location"
+  serviceable: true
+  tags:
+    - "water_cooler"
+    - "vindhya_building"
+    - "library_building"
+    - "common"
+  aliases:
+    - "vindhya water cooler"
+    - "library water cooler"
+    - "library water"
+    - "vindhya water"
+
+rrc canteen:
+  x: -12.0
+  y: 15.0
+  yaw: 0.0
+  type: "saved_location"
+  serviceable: true
+  tags:
+    - "canteen"
+    - "rrc_building"
+    - "food"
+  aliases:
+    - "rrc canteen"
+    - "rrc cafeteria"
+    - "rrc food"
+
+vindhya canteen:
+  x: 22.0
+  y: 48.0
+  yaw: 0.0
+  type: "saved_location"
+  serviceable: true
+  tags:
+    - "canteen"
+    - "vindhya_building"
+    - "food"
+  aliases:
+    - "vindhya canteen"
+    - "library canteen"
+    - "vindhya cafeteria"
+
+library:
+  x: 18.0
+  y: 42.0
+  yaw: 0.0
+  type: "saved_location"
+  serviceable: true
+  tags:
+    - "library_building"
+    - "study"
+  aliases:
+    - "library"
+    - "vindhya library"
+    - "central library"
