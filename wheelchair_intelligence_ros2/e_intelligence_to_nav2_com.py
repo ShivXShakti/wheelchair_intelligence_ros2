@@ -317,12 +317,24 @@ class IntelligenceToNav2(Node):
         # Hot-reload locations to instantly pick up newly saved poses
         self.destinations = self._load_locations()
 
-        if destination not in self.destinations:
+        # Case-insensitive and normalized key matching
+        matched_key = None
+        for key, data in self.destinations.items():
+            k_norm = key.lower().strip()
+            d_norm = destination.lower().strip()
+            aliases = [a.lower().strip() for a in data.get("aliases", [])] if isinstance(data, dict) else []
+            if k_norm == d_norm or k_norm.replace("_", " ") == d_norm.replace("_", " ") or d_norm in aliases:
+                matched_key = key
+                break
+
+        if not matched_key:
             self.get_logger().warn(
                 f'Unknown destination "{destination}". '
                 f'Available: {list(self.destinations.keys())}'
             )
             return
+
+        destination = matched_key
 
         goal_data = self.destinations[destination]
         pose = self._build_pose(goal_data)
